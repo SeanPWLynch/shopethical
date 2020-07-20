@@ -1,0 +1,19 @@
+server:
+  port: 8092
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+#    org.springframework.boot.autoconfigure: DEBUG
+
+spring:
+  jackson:
+    mapper:
+      #We don't care about stageDetail being stagedetail. It's all good.
+      accept_case_insensitive_properties: true
+    #      default-view-inclusion: true
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
