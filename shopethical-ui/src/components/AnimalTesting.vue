@@ -16,6 +16,17 @@
                             </v-btn>
                         </div>
 
+                        <v-row justify="center">
+                            <v-expansion-panels v-if="results.length > 0" inset>
+                                <v-expansion-panel v-for="result in results" :key="result.id">
+                                    <v-expansion-panel-header @click="getPolicy(result.id)">{{ result.name }}</v-expansion-panel-header>
+                                    <v-expansion-panel-content>
+                                        {{ result.name }} - {{policy}}
+                                    </v-expansion-panel-content>
+                                </v-expansion-panel>
+                            </v-expansion-panels>
+                        </v-row>
+
                         <v-simple-table v-if="results.length > 0">
                             <thead>
                             <tr>
@@ -41,30 +52,36 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
 
     export default {
         name: "AnimalTesting",
         data() {
             return {
                 searchCompany: '',
-                noResults: false,
+                noResults: false
             }
         },
         computed: {
             ...mapGetters({
-                results: 'animalTesting/results'
+                results: 'animalTesting/results',
+                policy: 'animalTesting/policy'
             })
         },
         methods: {
             ...mapActions({
                 getResults: 'animalTesting/getResults',
+                getPolicy: 'animalTesting/getPolicy',
             }),
             searchCompanies() {
                 let search = {
                     company: this.searchCompany
                 }
                 this.getResults(search)
+            },
+            searchPolicy(id) {
+                console.log(id)
+                this.getPolicy(id)
             }
         },
         watch: {
