@@ -27,20 +27,6 @@
                             </v-expansion-panels>
                         </v-row>
 
-                        <v-simple-table v-if="results.length > 0">
-                            <thead>
-                            <tr>
-                                <th class="text-left">ID</th>
-                                <th class="text-left">Name</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="result in results" :key="result.id">
-                                <td>{{ result.id }}</td>
-                                <td>{{ result.name }}</td>
-                            </tr>
-                            </tbody>
-                        </v-simple-table>
                         <div v-if="noResults">
                             <span class="text--secondary">No results found</span>
                         </div>
