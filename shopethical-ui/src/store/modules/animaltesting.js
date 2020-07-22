@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const state = {
 	results: [],
-	policy: '',
+	policy: [],
 };
 
 const getters = {
@@ -44,7 +44,7 @@ const actions = {
 		axios.get(`http://localhost:8092/animaltesting/policy/${companyID}`,
 			config)
 			.then(({data}) => {
-				commit('savePolicy', data.policy);
+				commit('savePolicy', data);
 			})
 	}
 };

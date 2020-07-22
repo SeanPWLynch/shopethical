@@ -5,7 +5,7 @@
                 <v-card>
                     <v-card-title>Search Company Database</v-card-title>
                     <v-card-text>
-                        <div class="d-flex align-center">
+                        <div class="align-center">
                             <v-text-field v-model="searchCompany"
                                           label="Company Name"></v-text-field>
                             <v-btn color="primary"
@@ -19,9 +19,16 @@
                         <v-row justify="center">
                             <v-expansion-panels v-if="results.length > 0" inset>
                                 <v-expansion-panel v-for="result in results" :key="result.id">
-                                    <v-expansion-panel-header @click="getPolicy(result.id)">{{ result.name }}</v-expansion-panel-header>
+                                    <v-expansion-panel-header @click="searchPolicy(result.id)">{{ result.name }}
+                                    </v-expansion-panel-header>
                                     <v-expansion-panel-content>
-                                        {{ result.name }} - {{policy}}
+                                        <v-progress-circular v-show="gettingPolicy"
+                                                             indeterminate
+                                                             color="primary"
+                                        ></v-progress-circular>
+                                        <div v-show="!gettingPolicy">
+                                            <span>{{ result.name }} - {{policy.policy}}</span>
+                                        </div>
                                     </v-expansion-panel-content>
                                 </v-expansion-panel>
                             </v-expansion-panels>
@@ -45,7 +52,9 @@
         data() {
             return {
                 searchCompany: '',
-                noResults: false
+                noResults: false,
+                gettingPolicy: false,
+                companyPolicy: ''
             }
         },
         computed: {
@@ -66,13 +75,16 @@
                 this.getResults(search)
             },
             searchPolicy(id) {
-                console.log(id)
+                this.gettingPolicy = true
                 this.getPolicy(id)
             }
         },
         watch: {
             results(results) {
                 this.noResults = results.length <= 0;
+            },
+            policy() {
+                this.gettingPolicy=false;
             }
         }
     }
